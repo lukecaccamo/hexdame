@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="DrawBoardService.cs" />
+    <Compile Include="MoveEngine.cs" />
+    <Compile Include="PlayerPieceManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

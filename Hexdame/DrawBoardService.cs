@@ -17,10 +17,19 @@ namespace Hexdame
             numberOfSpaces = 61
         }
 
+        /// <summary>
+        /// Center board coordinates.
+        /// </summary>
         public Vector2 boardCenter;
 
+        /// <summary>
+        /// Stores the coordinates of all spaces.
+        /// </summary>
         public List<Vector2> boardSpaceCoordinates;
 
+        /// <summary>
+        /// Initializes board coordinates.
+        /// </summary>
         //Calculates the coordinates for the board tiles
         public DrawBoardService()
         {
@@ -28,6 +37,7 @@ namespace Hexdame
             int numInColumn = 5;
             boardSpaceCoordinates = new List<Vector2>();
 
+            //For each column draw the correct number of spaces
             for (int x = 0; x < (int)sizes.maxSpacesInColumn; ++x)
             {
                 for (int y = 0; y < numInColumn; ++y)
@@ -51,6 +61,9 @@ namespace Hexdame
             }
         }
 
+        /// <summary>
+        /// Draws the spaces.
+        /// </summary>
         public void DrawBoard(SpriteBatch spriteBatch, Texture2D boardSpace)
         {
             for (int i = 0; i < (int)sizes.numberOfSpaces; ++i)
@@ -59,15 +72,24 @@ namespace Hexdame
             }
         }
 
+        /// <summary>
+        /// Calculation for x coordinates.
+        /// </summary>
         private float CalculateX(int x)
         {
             return (float)sizes.oneSpaceX * x;
         }
 
+        /// <summary>
+        /// Calculation for y coordinates.
+        /// </summary>
         private float CalculateY(int x, int y)
         {
             if (x <= 4)
+            {
                 return (float)sizes.totalHeight * y - (int)sizes.oneSpaceY * x;
+            }
+                
             return (float)sizes.totalHeight * y - (int)sizes.oneSpaceY * (8 - x);
         }
     }
