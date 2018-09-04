@@ -36,7 +36,7 @@ namespace Hexdame
 
                     if (x == halfBoard && y == halfBoard)
                     {
-                        boardCenter = new Vector2(CalculateX(x) + (int)sizes.oneSpaceY, CalculateY(x, y));
+                        boardCenter = new Vector2(CalculateX(x) + (int)sizes.oneSpaceY, CalculateY(x, y) + (int)sizes.oneSpaceY);
                     }
                 }
 

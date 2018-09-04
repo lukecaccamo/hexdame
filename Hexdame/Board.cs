@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Comora;
 
+//TODO: Make a constants class, get rid of magic numbers
+// clean up drawservice class and add comments
 namespace Hexdame
 {
     /// <summary>
@@ -78,7 +80,7 @@ namespace Hexdame
             // TODO: Add your update logic here
             this.camera.Update(gameTime);
 
-            this.camera.Zoom = 0.5F;
+            this.camera.Zoom = 0.6F;
 
             base.Update(gameTime);
         }
