@@ -7,14 +7,17 @@ namespace Hexdame
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Board : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
-        public Game1()
+        Texture2D boardSpace;
+
+        public Board()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = 1920;
             Content.RootDirectory = "Content";
         }
 
@@ -41,6 +44,7 @@ namespace Hexdame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            boardSpace = Content.Load<Texture2D>("hexagon");
         }
 
         /// <summary>
@@ -74,8 +78,11 @@ namespace Hexdame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            DrawBoardService boardRenderer = new DrawBoardService();
 
+            boardRenderer.DrawBoard(spriteBatch, boardSpace);
             // TODO: Add your drawing code here
+            
 
             base.Draw(gameTime);
         }
