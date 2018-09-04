@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Hexdame
 {
@@ -12,48 +13,62 @@ namespace Hexdame
             totalHeight = 190,
             oneSpaceX = 164,
             oneSpaceY = 95,
-            maxSpacesInColumn = 9
+            maxSpacesInColumn = 9,
+            numberOfSpaces = 61
         }
 
-        private float calculateX(int x)
-        {
-            return (float)sizes.oneSpaceX * x;
-        }
+        public Vector2 boardCenter;
 
-        private float calculateY(int x, int y)
+        public List<Vector2> boardSpaceCoordinates;
+
+        //Calculates the coordinates for the board tiles
+        public DrawBoardService()
         {
-            if (x <= 4)
-                return (float)sizes.totalHeight * y + (int)sizes.oneSpaceY * (8 - x);
-            return (float)sizes.totalHeight * y + (int)sizes.oneSpaceY * x;
+            int halfBoard = 4;
+            int numInColumn = 5;
+            boardSpaceCoordinates = new List<Vector2>();
+
+            for (int x = 0; x < (int)sizes.maxSpacesInColumn; ++x)
+            {
+                for (int y = 0; y < numInColumn; ++y)
+                {
+                    boardSpaceCoordinates.Add(new Vector2(CalculateX(x), CalculateY(x, y)));
+
+                    if (x == halfBoard && y == halfBoard)
+                    {
+                        boardCenter = new Vector2(CalculateX(x) + (int)sizes.oneSpaceY, CalculateY(x, y));
+                    }
+                }
+
+                if (x < halfBoard)
+                {
+                    numInColumn++;
+                }
+                else
+                {
+                    numInColumn--;
+                }
+            }
         }
 
         public void DrawBoard(SpriteBatch spriteBatch, Texture2D boardSpace)
         {
-            spriteBatch.Begin();
-
-            int minSpacesInColumn = 5;
-
-            for (int x = 0; x < (int)sizes.maxSpacesInColumn; ++x)
+            for (int i = 0; i < (int)sizes.numberOfSpaces; ++i)
             {
-
-                for (int y = 0; y < minSpacesInColumn; ++y)
-                {
-                    spriteBatch.Draw(boardSpace, new Vector2(calculateX(x), calculateY(x, y)), Color.SlateGray);
-
-
-                }
-
-                if (minSpacesInColumn < (int)sizes.maxSpacesInColumn)
-                    minSpacesInColumn++;
-                else
-                    minSpacesInColumn--;
+                spriteBatch.Draw(boardSpace, boardSpaceCoordinates[i], Color.SlateGray);
             }
-
-
-            spriteBatch.End();
         }
 
+        private float CalculateX(int x)
+        {
+            return (float)sizes.oneSpaceX * x;
+        }
 
-
+        private float CalculateY(int x, int y)
+        {
+            if (x <= 4)
+                return (float)sizes.totalHeight * y - (int)sizes.oneSpaceY * x;
+            return (float)sizes.totalHeight * y - (int)sizes.oneSpaceY * (8 - x);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Comora;
 
 namespace Hexdame
 {
@@ -9,15 +10,20 @@ namespace Hexdame
     /// </summary>
     public class Board : Game
     {
+        Camera camera;
         GraphicsDeviceManager graphics;
+        GraphicsAdapter deviceGraphicsAdapter; 
         SpriteBatch spriteBatch;
         Texture2D boardSpace;
+        DrawBoardService boardRenderer;
 
         public Board()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 1080;
-            graphics.PreferredBackBufferWidth = 1920;
+            deviceGraphicsAdapter = new GraphicsAdapter();
+
+            graphics.PreferredBackBufferHeight = deviceGraphicsAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = deviceGraphicsAdapter.CurrentDisplayMode.Width;
             Content.RootDirectory = "Content";
         }
 
@@ -30,7 +36,8 @@ namespace Hexdame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            this.camera = new Camera(this.graphics.GraphicsDevice);
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -42,6 +49,8 @@ namespace Hexdame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            boardRenderer = new DrawBoardService();
+            this.camera.Position = boardRenderer.boardCenter;
 
             // TODO: use this.Content to load your game content here
             boardSpace = Content.Load<Texture2D>("hexagon");
@@ -67,6 +76,9 @@ namespace Hexdame
                 Exit();
 
             // TODO: Add your update logic here
+            this.camera.Update(gameTime);
+
+            this.camera.Zoom = 0.5F;
 
             base.Update(gameTime);
         }
@@ -78,11 +90,12 @@ namespace Hexdame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            DrawBoardService boardRenderer = new DrawBoardService();
+            
+            spriteBatch.Begin(this.camera);
 
             boardRenderer.DrawBoard(spriteBatch, boardSpace);
-            // TODO: Add your drawing code here
-            
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
