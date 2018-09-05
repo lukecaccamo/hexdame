@@ -2,7 +2,7 @@
 {
     class PlayerPieceManager
     {
-        //Draw read and blue
+        //Draw red and blue
         //render moves
     }
 }

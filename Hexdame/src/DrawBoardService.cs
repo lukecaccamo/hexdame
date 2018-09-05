@@ -1,21 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace Hexdame
 {
     class DrawBoardService
     {
-        private enum sizes : int
-        {
-            totalWidth = 220,
-            totalHeight = 190,
-            oneSpaceX = 164,
-            oneSpaceY = 95,
-            maxSpacesInColumn = 9,
-            numberOfSpaces = 61
-        }
 
         /// <summary>
         /// Center board coordinates.
@@ -33,24 +23,23 @@ namespace Hexdame
         //Calculates the coordinates for the board tiles
         public DrawBoardService()
         {
-            int halfBoard = 4;
-            int numInColumn = 5;
+            int numInColumn = BoardConstants.MinSpacesInColumn;
             boardSpaceCoordinates = new List<Vector2>();
 
             //For each column draw the correct number of spaces
-            for (int x = 0; x < (int)sizes.maxSpacesInColumn; ++x)
+            for (int x = 0; x < BoardConstants.MaxSpacesInColumn; ++x)
             {
                 for (int y = 0; y < numInColumn; ++y)
                 {
                     boardSpaceCoordinates.Add(new Vector2(CalculateX(x), CalculateY(x, y)));
 
-                    if (x == halfBoard && y == halfBoard)
+                    if (x == BoardConstants.HalfBoard && y == BoardConstants.HalfBoard)
                     {
-                        boardCenter = new Vector2(CalculateX(x) + (int)sizes.oneSpaceY, CalculateY(x, y) + (int)sizes.oneSpaceY);
+                        boardCenter = new Vector2(CalculateX(x) + BoardConstants.OneSpaceY, CalculateY(x, y) + BoardConstants.OneSpaceY);
                     }
                 }
 
-                if (x < halfBoard)
+                if (x < BoardConstants.HalfBoard)
                 {
                     numInColumn++;
                 }
@@ -66,7 +55,7 @@ namespace Hexdame
         /// </summary>
         public void DrawBoard(SpriteBatch spriteBatch, Texture2D boardSpace)
         {
-            for (int i = 0; i < (int)sizes.numberOfSpaces; ++i)
+            for (int i = 0; i < BoardConstants.NumberOfSpaces; ++i)
             {
                 spriteBatch.Draw(boardSpace, boardSpaceCoordinates[i], Color.SlateGray);
             }
@@ -77,7 +66,7 @@ namespace Hexdame
         /// </summary>
         private float CalculateX(int x)
         {
-            return (float)sizes.oneSpaceX * x;
+            return BoardConstants.OneSpaceX * x;
         }
 
         /// <summary>
@@ -85,12 +74,12 @@ namespace Hexdame
         /// </summary>
         private float CalculateY(int x, int y)
         {
-            if (x <= 4)
+            if (x <= BoardConstants.HalfBoard)
             {
-                return (float)sizes.totalHeight * y - (int)sizes.oneSpaceY * x;
+                return BoardConstants.TotalHeight * y - BoardConstants.OneSpaceY * x;
             }
-                
-            return (float)sizes.totalHeight * y - (int)sizes.oneSpaceY * (8 - x);
+
+            return BoardConstants.TotalHeight * y - BoardConstants.OneSpaceY * (BoardConstants.FullBoard - x);
         }
     }
 }

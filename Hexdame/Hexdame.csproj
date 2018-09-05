@@ -36,16 +36,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="DrawBoardService.cs" />
-    <Compile Include="MoveEngine.cs" />
-    <Compile Include="PlayerPieceManager.cs" />
+    <Compile Include="src\Board.cs" />
+    <Compile Include="src\BoardConstants.cs" />
+    <Compile Include="src\DrawBoardService.cs" />
+    <Compile Include="src\MoveEngine.cs" />
+    <Compile Include="src\PlayerPieceManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,8 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Icon.ico" />
-    <EmbeddedResource Include="Icon.bmp" />
+    <EmbeddedResource Include="Assets\Icon.ico" />
+    <EmbeddedResource Include="Assets\Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

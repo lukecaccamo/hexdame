@@ -18,6 +18,7 @@ namespace Hexdame
         SpriteBatch spriteBatch;
         Texture2D boardSpace;
         DrawBoardService boardRenderer;
+        
 
         public Board()
         {
@@ -37,7 +38,6 @@ namespace Hexdame
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             this.camera = new Camera(this.graphics.GraphicsDevice);
             this.IsMouseVisible = true;
             base.Initialize();
@@ -52,9 +52,12 @@ namespace Hexdame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             boardRenderer = new DrawBoardService();
-            this.camera.Position = boardRenderer.boardCenter;
 
-            // TODO: use this.Content to load your game content here
+            //Camera settings
+            this.camera.Position = boardRenderer.boardCenter;
+            this.camera.Zoom = BoardConstants.ZoomLevel;
+
+            //Loading assets
             boardSpace = Content.Load<Texture2D>("hexagon");
         }
 
@@ -75,12 +78,7 @@ namespace Hexdame
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-            this.camera.Update(gameTime);
-
-            this.camera.Zoom = 0.6F;
+                Exit();        
 
             base.Update(gameTime);
         }
